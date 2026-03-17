@@ -1,12 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from "react";
 import imageCompression from "browser-image-compression";
+
+  const sendPageView = (path: string) => {
+    // @ts-ignore
+  if (typeof window.gtag !== 'undefined') {
+    // @ts-ignore
+    window.gtag('config', 'G-LQDNZRTPEM', {
+      page_path: path,
+    });
+  }
+};
 
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [compressedFile, setCompressedFile] = useState<Blob | null>(null);
   const [loading, setLoading] = useState(false);
+    const pathname = usePathname();
+
+  useEffect(() => {
+    sendPageView(pathname);
+  }, [pathname]);
+
+
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
@@ -121,6 +139,6 @@ export default function Home() {
     </a>
   </div>
 </div>
-    </main>
+    </main> 
   );
 }
