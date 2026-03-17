@@ -44,9 +44,17 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">
-        FixMyDocs - Compress Image
+      <h1 className="text-3xl font-bold text-gray-800 mb-4 text-center">
+        Compress Image to 50KB Online Free
       </h1>
+      <p className="text-sm text-gray-500 mb-4 text-center">
+        Perfect for job forms, government exams, and online applications.
+      </p>
+
+      <p className="text-gray-600 mb-6 text-center max-w-md">
+        Reduce your image size to 50KB instantly without losing quality. Free,
+        fast, and no login required.
+      </p>
 
       <input
         type="file"
@@ -70,6 +78,49 @@ export default function Home() {
           </button>
         </div>
       )}
+
+      <div className="mt-10 max-w-xl text-left">
+        <h2 className="text-xl font-semibold mb-4">FAQs</h2>
+
+        <div className="mb-3">
+          <h3 className="font-medium">How to compress image to 50KB?</h3>
+          <p className="text-gray-600 text-sm">
+            Upload your image, and our tool will automatically reduce its size
+            to around 50KB while maintaining quality.
+          </p>
+        </div>
+
+        <div className="mb-3">
+          <h3 className="font-medium">Is this image compressor free?</h3>
+          <p className="text-gray-600 text-sm">
+            Yes, FixMyDocs is completely free and does not require login or
+            signup.
+          </p>
+        </div>
+
+        <div className="mb-3">
+          <h3 className="font-medium">Does it reduce image quality?</h3>
+          <p className="text-gray-600 text-sm">
+            Our tool optimizes compression to reduce file size while keeping the
+            best possible quality.
+          </p>
+        </div>
+      </div>
+      <div className="mt-10 text-center">
+  <h2 className="text-lg font-semibold mb-3">More Tools (Coming Soon)</h2>
+
+  <div className="flex flex-col gap-2 text-blue-600 text-sm">
+    <a href="/compress-pdf-to-100kb" className="hover:underline">
+      Compress PDF to 100KB
+    </a>
+    <a href="/resize-image-for-whatsapp" className="hover:underline">
+      Resize Image for WhatsApp
+    </a>
+    <a href="/convert-pdf-to-word" className="hover:underline">
+      Convert PDF to Word
+    </a>
+  </div>
+</div>
     </main>
   );
 }
