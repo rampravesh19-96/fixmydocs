@@ -13,7 +13,7 @@ type Props = {
     signature?: string;
   };
   maxSizeKB?: number;
-  category?: "ssc" | "passport" | "compress";
+  category?: "ssc" | "passport" | "compress" | "resize";
   faqs?: { question: string; answer: string }[];
 
   content?: {
@@ -39,6 +39,11 @@ const relatedLinks = {
     { href: "/compress/image-20kb", label: "Compress Image 20KB" },
     { href: "/compress/pdf-100kb", label: "Compress PDF 100KB" },
   ],
+  resize: [
+  { href: "/resize/resize-image-100x100", label: "Resize 100x100" },
+  { href: "/resize/resize-image-200x200", label: "Resize 200x200" },
+  { href: "/resize/resize-image-300x300", label: "Resize 300x300" },
+],
 };
 
 export default function ToolPage({
@@ -135,12 +140,12 @@ export default function ToolPage({
   <div className="flex gap-4 mt-6 flex-col md:flex-row">
     <div className="text-center">
       <p>Original</p>
-      <img src={originalURL} className="max-w-xs rounded shadow" />
+      <img src={originalURL}  alt="Original uploaded image" className="max-w-xs rounded shadow" />
     </div>
 
     <div className="text-center">
       <p>Compressed</p>
-      <img src={compressedURL} className="max-w-xs rounded shadow" />
+      <img src={compressedURL} alt="Compressed result image" className="max-w-xs rounded shadow" />
       <p className="text-green-600 text-sm mt-1">
         {(compressed.size / 1024).toFixed(2)} KB
       </p>
@@ -189,7 +194,7 @@ export default function ToolPage({
         <Link href="/">Home</Link>
       </div>
 
-      {category && (
+      {category && relatedLinks[category] && (
         <div className="mt-12 max-w-xl">
           <h2 className="text-lg font-semibold mb-3">Related Tools</h2>
           <div className="flex flex-col gap-2 text-blue-600 text-sm">

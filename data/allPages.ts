@@ -2,10 +2,12 @@ type Page = {
   title: string;
   description: string;
   maxSizeKB?: number;
-  category: "ssc" | "passport" | "compress";
+  category: "ssc" | "passport" | "compress" | "resize";
 };
 
-const sizes = [10, 20, 30, 50, 100];
+const sizes = [
+  5, 10, 15, 20, 25, 30, 40, 50, 60, 80, 100, 120, 150, 200
+];
 
 function generatePages(prefix: string, category: Page["category"]) {
   const pages: Record<string, Page> = {};
@@ -86,9 +88,38 @@ const compressPages: Record<string, Page> = {
     category: "compress",
   },
 };
+const resizePages: Record<string, Page> = {
+  "resize-image-100x100": {
+    title: "Resize Image to 100x100 Pixels Online",
+    description: "Free tool to resize image to 100x100 pixels.",
+    category: "resize", // ✅ FIXED
+  },
+  "resize-image-200x200": {
+    title: "Resize Image to 200x200 Pixels Online",
+    description: "Resize image to 200x200 pixels instantly.",
+    category: "resize", // ✅ FIXED
+  },
+  "resize-image-300x300": {
+    title: "Resize Image to 300x300 Pixels Online",
+    description: "Resize image to 300x300 pixels online.",
+    category: "resize", // ✅ FIXED
+  },
+  "resize-image-passport": {
+    title: "Resize Image for Passport Size",
+    description: "Resize photo for passport size requirements.",
+    category: "resize", // ✅ FIXED
+  },
+  "resize-image-50kb": {
+  title: "Resize Image to 50KB Online",
+  description: "Resize and compress image to 50KB.",
+  maxSizeKB: 50,
+  category: "resize",
+},
+};
 
 export const allPages: Record<string, Record<string, Page>> = {
   ssc: generatePages("ssc", "ssc"),
   passport: generatePages("passport", "passport"),
   compress: compressPages,
+  resize: resizePages, 
 };

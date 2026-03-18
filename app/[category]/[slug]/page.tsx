@@ -51,7 +51,7 @@ export default async function Page({
         signature: "10KB–20KB",
       }}
       maxSizeKB={data.maxSizeKB}
-      category={category as "ssc" | "passport" | "compress"}
+      category={category as "ssc" | "passport" | "compress" | "resize"}
       faqs={generateFaqs(slug, category)}
       content={generateContent(slug, category)}
     />
