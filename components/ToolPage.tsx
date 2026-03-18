@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import imageCompression from "browser-image-compression";
 import Link from "next/link";
+import Image from "next/image";
 
 type Props = {
   title: string;
@@ -26,17 +27,19 @@ const relatedLinks = {
   ssc: [
     { href: "/ssc/photo", label: "SSC Photo Size Tool" },
     { href: "/ssc/signature", label: "SSC Signature Tool" },
-    { href: "/ssc/photo-50kb", label: "Compress SSC Photo to 50KB" },
+    { href: "/ssc/photo-20kb", label: "SSC Photo 20KB" },
+    { href: "/ssc/photo-30kb", label: "SSC Photo 30KB" },
+    { href: "/ssc/photo-50kb", label: "SSC Photo 50KB" },
+    { href: "/ssc/signature-10kb", label: "SSC Signature 10KB" },
+    { href: "/ssc/signature-20kb", label: "SSC Signature 20KB" },
   ],
   passport: [
-    { href: "/passport/photo", label: "Passport Photo Maker" },
-    { href: "/passport/india-photo", label: "Passport Photo India" },
-    { href: "/passport/photo-50kb", label: "Compress Passport Photo" },
+    { href: "/passport/photo", label: "Passport Photo Tool" },
   ],
   compress: [
-    { href: "/compress/image-50kb", label: "Compress Image to 50KB" },
-    { href: "/compress/image-20kb", label: "Compress Image to 20KB" },
-    { href: "/compress/pdf-100kb", label: "Compress PDF to 100KB" },
+    { href: "/compress/image-50kb", label: "Compress Image 50KB" },
+    { href: "/compress/image-20kb", label: "Compress Image 20KB" },
+    { href: "/compress/pdf-100kb", label: "Compress PDF 100KB" },
   ],
 };
 
@@ -45,7 +48,7 @@ export default function ToolPage({
   description,
   sizes,
   faqs,
-  maxSizeKB = 50, // ✅ default fix
+  maxSizeKB = 50,
   category,
   content,
 }: Props) {
@@ -88,8 +91,7 @@ export default function ToolPage({
 
   const handleFile = async (f: File) => {
     setFile(f);
-    const original = URL.createObjectURL(f);
-    setOriginalURL(original);
+    setOriginalURL(URL.createObjectURL(f));
 
     setLoading(true);
     const result = await compressToTarget(f);
@@ -100,18 +102,25 @@ export default function ToolPage({
 
   return (
     <main className="flex flex-col items-center min-h-screen bg-gray-50 p-4">
-      <h1 className="text-3xl font-bold mb-4 text-center">{title}</h1>
+      <h1 className="text-3xl font-bold text-center">{title}</h1>
+
+      <p className="text-xs text-gray-500 mt-1">
+        Free online tool for instant processing
+      </p>
+
       {content && (
-        <div className="max-w-xl text-center text-gray-700 mb-6">
+        <div className="max-w-xl text-center text-gray-700 mt-4">
           <p>{content.intro}</p>
         </div>
       )}
-      <p className="text-gray-600 mb-6 text-center max-w-md">{description}</p>
 
-      {/* Upload */}
+      <p className="text-gray-600 mt-4 text-center max-w-md">
+        {description}
+      </p>
+
       <div
         onClick={() => fileRef.current?.click()}
-        className="border-2 border-dashed p-6 rounded cursor-pointer bg-white text-center mb-4"
+        className="border-2 border-dashed p-6 rounded cursor-pointer bg-white text-center mt-6"
       >
         Upload Image
       </div>
@@ -124,24 +133,22 @@ export default function ToolPage({
         onChange={(e) => e.target.files && handleFile(e.target.files[0])}
       />
 
-      {loading && <p>Processing...</p>}
+      {loading && <p className="mt-4">Processing...</p>}
 
-      {/* Preview */}
       {originalURL && compressedURL && (
         <div className="flex gap-4 mt-6 flex-col md:flex-row">
           <div className="text-center">
             <p>Original</p>
-            <img src={originalURL} className="max-w-xs rounded shadow" />
+            <Image src={originalURL} width={200} height={200} alt="Original" />
           </div>
 
           <div className="text-center">
             <p>Compressed</p>
-            <img src={compressedURL} className="max-w-xs rounded shadow" />
+            <Image src={compressedURL} width={200} height={200} alt="Compressed" />
           </div>
         </div>
       )}
 
-      {/* Download */}
       {compressed && (
         <button
           onClick={() => {
@@ -156,17 +163,11 @@ export default function ToolPage({
         </button>
       )}
 
-      {/* Sizes */}
       <div className="mt-6 text-sm">
-        <p>
-          <b>Photo:</b> {sizes?.photo || "20KB–50KB"}
-        </p>
-        <p>
-          <b>Signature:</b> {sizes?.signature || "10KB–20KB"}
-        </p>
+        <p><b>Photo:</b> {sizes?.photo || "20KB–50KB"}</p>
+        <p><b>Signature:</b> {sizes?.signature || "10KB–20KB"}</p>
       </div>
 
-      {/* FAQ */}
       {faqs && (
         <div className="mt-8 max-w-xl">
           <h2 className="font-semibold mb-3">FAQs</h2>
@@ -179,73 +180,21 @@ export default function ToolPage({
         </div>
       )}
 
-      {/* Home Link */}
       <div className="mt-10 text-blue-600 text-sm flex flex-col gap-2">
         <Link href="/">Home</Link>
       </div>
 
-      {/* Auto Related Links */}
       {category && (
-        <div className="mt-12 max-w-xl text-left">
+        <div className="mt-12 max-w-xl">
           <h2 className="text-lg font-semibold mb-3">Related Tools</h2>
-
           <div className="flex flex-col gap-2 text-blue-600 text-sm">
             {relatedLinks[category].map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                prefetch={true}
-                className="hover:underline"
-              >
+              <Link key={link.href} href={link.href} prefetch={true}>
                 {link.label}
               </Link>
             ))}
           </div>
         </div>
-      )}
-
-      <div className="mt-12 max-w-xl text-left">
-        <h2 className="text-lg font-semibold mb-3">HOW TO</h2>
-
-        {content?.steps && (
-          <div className="mt-10 max-w-xl text-left">
-            <h2 className="text-xl font-semibold mb-3">
-              How to {title.toLowerCase()}?
-            </h2>
-
-            <ol className="list-decimal pl-5 text-gray-700 space-y-1">
-              {content.steps.map((step, i) => (
-                <li key={i}>{step}</li>
-              ))}
-            </ol>
-          </div>
-        )}
-      </div>
-
-      {content?.extra && (
-        <div className="mt-6 max-w-xl text-gray-700">
-          <p>{content.extra}</p>
-        </div>
-      )}
-
-      {faqs && faqs.length > 0 && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              mainEntity: faqs.map((f) => ({
-                "@type": "Question",
-                name: f.question,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: f.answer,
-                },
-              })),
-            }),
-          }}
-        />
       )}
     </main>
   );

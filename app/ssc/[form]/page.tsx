@@ -3,7 +3,12 @@ import { sscPages } from "@/data/sscPages";
 import { generateContent } from "@/utils/generateContent";
 import { generateFaqs } from "@/utils/generateFaqs";
 
-// ✅ Dynamic SEO (IMPORTANT)
+// ✅ STATIC GENERATION (CRITICAL FOR SEO)
+export async function generateStaticParams() {
+  return Object.keys(sscPages).map((form) => ({ form }));
+}
+
+// ✅ SEO
 export async function generateMetadata({
   params,
 }: {
@@ -20,7 +25,7 @@ export async function generateMetadata({
   };
 }
 
-// ✅ Page
+// ✅ PAGE
 export default async function Page({
   params,
 }: {
@@ -28,21 +33,24 @@ export default async function Page({
 }) {
   const { form } = await params;
   const data = sscPages[form];
-  const faqs = generateFaqs(form, "ssc");
-  const content = generateContent(form, "ssc");
 
   if (!data) return <p>Page not found</p>;
 
-  return <ToolPage
-  title={data.title}
-  description={data.description}
-  sizes={{
-    photo: "20KB–50KB",
-    signature: "10KB–20KB",
-  }}
-  maxSizeKB={data.maxSizeKB}
-  category="ssc"   // ✅ ADD THIS
-    faqs={faqs}
-    content={content}
-/>
+  const faqs = generateFaqs(form, "ssc");
+  const content = generateContent(form, "ssc");
+
+  return (
+    <ToolPage
+      title={data.title}
+      description={data.description}
+      sizes={{
+        photo: "20KB–50KB",
+        signature: "10KB–20KB",
+      }}
+      maxSizeKB={data.maxSizeKB}
+      category="ssc"
+      faqs={faqs}
+      content={content}
+    />
+  );
 }
