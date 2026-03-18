@@ -3,7 +3,7 @@
 import { allPages } from "@/data/allPages";
 
 export default function sitemap() {
-  const baseUrl = "https://yourdomain.com";
+  const baseUrl = "https://www.fixmydocs.in";
 
   const urls = [];
 
