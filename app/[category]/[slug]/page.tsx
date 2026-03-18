@@ -3,12 +3,15 @@ import { allPages } from "@/data/allPages";
 import { generateContent } from "@/utils/generateContent";
 import { generateFaqs } from "@/utils/generateFaqs";
 
+// ✅ TYPE FIX
+type Category = keyof typeof allPages;
+
 export async function generateStaticParams() {
-  const params: { category: string; slug: string }[] = [];
+  const params: { category: Category; slug: string }[] = [];
 
   Object.entries(allPages).forEach(([category, pages]) => {
     Object.keys(pages).forEach((slug) => {
-      params.push({ category, slug });
+      params.push({ category: category as Category, slug });
     });
   });
 
@@ -18,7 +21,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ category: string; slug: string }>;
+  params: Promise<{ category: Category; slug: string }>;
 }) {
   const { category, slug } = await params;
   const data = allPages[category]?.[slug];
@@ -32,7 +35,7 @@ export async function generateMetadata({
 export default async function Page({
   params,
 }: {
-  params: Promise<{ category: string; slug: string }>;
+  params: Promise<{ category: Category; slug: string }>;
 }) {
   const { category, slug } = await params;
   const data = allPages[category]?.[slug];
@@ -48,7 +51,7 @@ export default async function Page({
         signature: "10KB–20KB",
       }}
       maxSizeKB={data.maxSizeKB}
-      category={category}
+      category={category as "ssc" | "passport" | "compress"}
       faqs={generateFaqs(slug, category)}
       content={generateContent(slug, category)}
     />

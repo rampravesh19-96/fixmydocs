@@ -1,3 +1,4 @@
+// /utils/generateFaqs.ts
 type FAQ = {
   question: string;
   answer: string;

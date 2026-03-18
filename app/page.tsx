@@ -1,4 +1,5 @@
 "use client";
+// /app/page.tsx
 
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
@@ -166,18 +167,18 @@ export default function Home() {
           Popular Tools
         </h2>
 
-        <div className="flex flex-col gap-2 text-blue-600 text-sm">
+<div className="flex flex-col gap-2 text-blue-600 text-sm">
 
-          <Link href="/ssc/photo">SSC Photo Size Tool</Link>
-          <Link href="/ssc/signature">SSC Signature Tool</Link>
+  <Link href="/ssc/photo">SSC Photo</Link>
+  <Link href="/passport/photo">Passport Photo</Link>
 
-          <Link href="/ssc/photo-20kb">SSC Photo 20KB</Link>
-          <Link href="/ssc/photo-50kb">SSC Photo 50KB</Link>
+  <Link href="/ssc/photo-20kb">SSC Photo 20KB</Link>
+  <Link href="/passport/photo-50kb">Passport Photo 50KB</Link>
 
-          <Link href="/compress/image-50kb">Compress Image to 50KB</Link>
-          <Link href="/compress/pdf-100kb">Compress PDF to 100KB</Link>
+  <Link href="/compress/image-50kb">Compress Image</Link>
+  <Link href="/compress/pdf-100kb">Compress PDF</Link>
 
-        </div>
+</div>
       </div>
 
     </main>

@@ -10,7 +10,6 @@ const sizes = [10, 20, 30, 50, 100];
 function generatePages(prefix: string, category: Page["category"]) {
   const pages: Record<string, Page> = {};
 
-  // Photo base
   pages["photo"] = {
     title: `${prefix.toUpperCase()} Photo Size Tool Online Free`,
     description: `Resize and compress ${prefix} photo online free.`,
@@ -18,7 +17,6 @@ function generatePages(prefix: string, category: Page["category"]) {
     category,
   };
 
-  // Signature base
   pages["signature"] = {
     title: `${prefix.toUpperCase()} Signature Size Tool Online Free`,
     description: `Resize and compress ${prefix} signature online free.`,
@@ -26,7 +24,6 @@ function generatePages(prefix: string, category: Page["category"]) {
     category,
   };
 
-  // KB pages
   sizes.forEach((kb) => {
     pages[`photo-${kb}kb`] = {
       title: `Compress ${prefix} Photo to ${kb}KB Online`,
@@ -46,20 +43,52 @@ function generatePages(prefix: string, category: Page["category"]) {
   return pages;
 }
 
-export const allPages = {
+// ✅ FIX: FORCE TYPE
+const compressPages: Record<string, Page> = {
+  "image-10kb": {
+    title: "Compress Image to 10KB Online",
+    description: "Reduce image size to 10KB.",
+    maxSizeKB: 10,
+    category: "compress",
+  },
+  "image-20kb": {
+    title: "Compress Image to 20KB Online",
+    description: "Reduce image size to 20KB.",
+    maxSizeKB: 20,
+    category: "compress",
+  },
+  "image-30kb": {
+    title: "Compress Image to 30KB Online",
+    description: "Reduce image size to 30KB.",
+    maxSizeKB: 30,
+    category: "compress",
+  },
+  "image-50kb": {
+    title: "Compress Image to 50KB Online",
+    description: "Reduce image size to 50KB.",
+    maxSizeKB: 50,
+    category: "compress",
+  },
+  "image-100kb": {
+    title: "Compress Image to 100KB Online",
+    description: "Reduce image size to 100KB.",
+    maxSizeKB: 100,
+    category: "compress",
+  },
+  "pdf-50kb": {
+    title: "Compress PDF to 50KB Online",
+    description: "Reduce PDF size to 50KB.",
+    category: "compress",
+  },
+  "pdf-100kb": {
+    title: "Compress PDF to 100KB Online",
+    description: "Reduce PDF size to 100KB.",
+    category: "compress",
+  },
+};
+
+export const allPages: Record<string, Record<string, Page>> = {
   ssc: generatePages("ssc", "ssc"),
   passport: generatePages("passport", "passport"),
-  compress: {
-    "image-50kb": {
-      title: "Compress Image to 50KB Online Free",
-      description: "Reduce image size to 50KB instantly.",
-      maxSizeKB: 50,
-      category: "compress",
-    },
-    "pdf-100kb": {
-      title: "Compress PDF to 100KB Online Free",
-      description: "Reduce PDF file size to 100KB.",
-      category: "compress",
-    },
-  },
+  compress: compressPages,
 };

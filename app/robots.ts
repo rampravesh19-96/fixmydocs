@@ -1,3 +1,4 @@
+// /app/robots.ts
 export default function robots() {
   return {
     rules: [

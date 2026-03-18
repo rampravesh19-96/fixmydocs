@@ -1,3 +1,4 @@
+// /utils/generateMeta.ts
 export function generateMeta(slug: string, category: string) {
   const readable = slug.replace(/-/g, " ");
 

@@ -1,3 +1,4 @@
+// /utils/generateContent.ts
 type ContentBlock = {
   intro: string;
   steps: string[];

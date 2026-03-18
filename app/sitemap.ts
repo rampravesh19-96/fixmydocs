@@ -1,25 +1,18 @@
-import { sscPages } from "@/data/sscPages";
+// /app/sitemap.ts
+import { allPages } from "@/data/allPages";
 
 export default function sitemap() {
   const baseUrl = "https://fixmydocs.in";
 
-  // ✅ Static pages
-  const staticPages = [
-    { url: `${baseUrl}`, priority: 1 },
-  ];
+  const urls: any[] = [{ url: baseUrl }];
 
-  // ✅ SSC dynamic pages
-  const ssc = Object.keys(sscPages).map((slug) => ({
-    url: `${baseUrl}/ssc/${slug}`,
-    priority: 0.8,
-  }));
+  Object.entries(allPages).forEach(([category, pages]) => {
+    Object.keys(pages).forEach((slug) => {
+      urls.push({
+        url: `${baseUrl}/${category}/${slug}`,
+      });
+    });
+  });
 
-  // ✅ Compress pages (manual for now)
-  const compress = [
-    { url: `${baseUrl}/compress/image-20kb`, priority: 0.7 },
-    { url: `${baseUrl}/compress/image-50kb`, priority: 0.7 },
-    { url: `${baseUrl}/compress/pdf-100kb`, priority: 0.7 },
-  ];
-
-  return [...staticPages, ...ssc, ...compress];
+  return urls;
 }

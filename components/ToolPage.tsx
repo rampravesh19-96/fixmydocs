@@ -1,9 +1,9 @@
+// /components/ToolPage.tsx
 "use client";
 
 import { useState, useEffect, useRef } from "react";
 import imageCompression from "browser-image-compression";
 import Link from "next/link";
-import Image from "next/image";
 
 type Props = {
   title: string;
@@ -33,9 +33,7 @@ const relatedLinks = {
     { href: "/ssc/signature-10kb", label: "SSC Signature 10KB" },
     { href: "/ssc/signature-20kb", label: "SSC Signature 20KB" },
   ],
-  passport: [
-    { href: "/passport/photo", label: "Passport Photo Tool" },
-  ],
+  passport: [{ href: "/passport/photo", label: "Passport Photo Tool" }],
   compress: [
     { href: "/compress/image-50kb", label: "Compress Image 50KB" },
     { href: "/compress/image-20kb", label: "Compress Image 20KB" },
@@ -114,15 +112,13 @@ export default function ToolPage({
         </div>
       )}
 
-      <p className="text-gray-600 mt-4 text-center max-w-md">
-        {description}
-      </p>
+      <p className="text-gray-600 mt-4 text-center max-w-md">{description}</p>
 
       <div
         onClick={() => fileRef.current?.click()}
         className="border-2 border-dashed p-6 rounded cursor-pointer bg-white text-center mt-6"
       >
-        Upload Image
+        <p className="text-gray-600">Click to upload or drag & drop image</p>
       </div>
 
       <input
@@ -135,27 +131,32 @@ export default function ToolPage({
 
       {loading && <p className="mt-4">Processing...</p>}
 
-      {originalURL && compressedURL && (
-        <div className="flex gap-4 mt-6 flex-col md:flex-row">
-          <div className="text-center">
-            <p>Original</p>
-            <Image src={originalURL} width={200} height={200} alt="Original" />
-          </div>
+{originalURL && compressedURL && compressed && (
+  <div className="flex gap-4 mt-6 flex-col md:flex-row">
+    <div className="text-center">
+      <p>Original</p>
+      <img src={originalURL} className="max-w-xs rounded shadow" />
+    </div>
 
-          <div className="text-center">
-            <p>Compressed</p>
-            <Image src={compressedURL} width={200} height={200} alt="Compressed" />
-          </div>
-        </div>
-      )}
+    <div className="text-center">
+      <p>Compressed</p>
+      <img src={compressedURL} className="max-w-xs rounded shadow" />
+      <p className="text-green-600 text-sm mt-1">
+        {(compressed.size / 1024).toFixed(2)} KB
+      </p>
+    </div>
+  </div>
+)}
 
       {compressed && (
         <button
           onClick={() => {
+            const url = URL.createObjectURL(compressed);
             const a = document.createElement("a");
-            a.href = URL.createObjectURL(compressed);
-            a.download = "compressed.jpg";
+            a.href = url;
+            a.download = "compressed_" + file?.name.replace(/\s+/g, "_");
             a.click();
+            URL.revokeObjectURL(url);
           }}
           className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
         >
@@ -164,8 +165,12 @@ export default function ToolPage({
       )}
 
       <div className="mt-6 text-sm">
-        <p><b>Photo:</b> {sizes?.photo || "20KB–50KB"}</p>
-        <p><b>Signature:</b> {sizes?.signature || "10KB–20KB"}</p>
+        <p>
+          <b>Photo:</b> {sizes?.photo || "20KB–50KB"}
+        </p>
+        <p>
+          <b>Signature:</b> {sizes?.signature || "10KB–20KB"}
+        </p>
       </div>
 
       {faqs && (
@@ -195,6 +200,18 @@ export default function ToolPage({
             ))}
           </div>
         </div>
+      )}
+
+      {content?.steps && (
+        <ol className="mt-4 text-sm text-gray-700 list-decimal pl-5">
+          {content.steps.map((step, i) => (
+            <li key={i}>{step}</li>
+          ))}
+        </ol>
+      )}
+
+      {content?.extra && (
+        <p className="mt-4 text-sm text-gray-600">{content.extra}</p>
       )}
     </main>
   );
