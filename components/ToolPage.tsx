@@ -25,25 +25,60 @@ type Props = {
 
 const relatedLinks = {
   ssc: [
-    { href: "/ssc/photo", label: "SSC Photo Size Tool" },
+    { href: "/ssc/photo", label: "SSC Photo Tool" },
     { href: "/ssc/signature", label: "SSC Signature Tool" },
+
+    // 🔥 size cluster
     { href: "/ssc/photo-20kb", label: "SSC Photo 20KB" },
     { href: "/ssc/photo-30kb", label: "SSC Photo 30KB" },
     { href: "/ssc/photo-50kb", label: "SSC Photo 50KB" },
+
     { href: "/ssc/signature-10kb", label: "SSC Signature 10KB" },
     { href: "/ssc/signature-20kb", label: "SSC Signature 20KB" },
-  ],
-  passport: [{ href: "/passport/photo", label: "Passport Photo Tool" }],
-  compress: [
+
+    // 🔥 cross linking (VERY IMPORTANT)
     { href: "/compress/image-50kb", label: "Compress Image 50KB" },
-    { href: "/compress/image-20kb", label: "Compress Image 20KB" },
-    { href: "/compress/pdf-100kb", label: "Compress PDF 100KB" },
+    { href: "/resize/resize-image-100x100", label: "Resize Image 100x100" },
   ],
+
+  passport: [
+    { href: "/passport/photo", label: "Passport Photo Tool" },
+
+    { href: "/passport/photo-20kb", label: "Passport Photo 20KB" },
+    { href: "/passport/photo-50kb", label: "Passport Photo 50KB" },
+
+    // 🔥 cross linking
+    { href: "/compress/image-50kb", label: "Compress Image 50KB" },
+    { href: "/resize/resize-image-passport", label: "Resize Passport Photo" },
+  ],
+
+  compress: [
+    // 🔥 cluster
+    { href: "/compress/image-10kb", label: "Compress Image 10KB" },
+    { href: "/compress/image-20kb", label: "Compress Image 20KB" },
+    { href: "/compress/image-30kb", label: "Compress Image 30KB" },
+    { href: "/compress/image-50kb", label: "Compress Image 50KB" },
+    { href: "/compress/image-100kb", label: "Compress Image 100KB" },
+
+    // 🔥 cross category
+    { href: "/ssc/photo", label: "SSC Photo Tool" },
+    { href: "/passport/photo", label: "Passport Photo Tool" },
+
+    // 🔥 features
+    { href: "/compress-pdf-to-100kb", label: "Compress PDF 100KB" },
+  ],
+
   resize: [
-  { href: "/resize/resize-image-100x100", label: "Resize 100x100" },
-  { href: "/resize/resize-image-200x200", label: "Resize 200x200" },
-  { href: "/resize/resize-image-300x300", label: "Resize 300x300" },
-],
+    { href: "/resize/resize-image-100x100", label: "Resize 100x100" },
+    { href: "/resize/resize-image-200x200", label: "Resize 200x200" },
+    { href: "/resize/resize-image-300x300", label: "Resize 300x300" },
+
+    { href: "/resize/resize-image-passport", label: "Resize Passport Image" },
+
+    // 🔥 cross linking
+    { href: "/compress/image-50kb", label: "Compress Image 50KB" },
+    { href: "/ssc/photo", label: "SSC Photo Tool" },
+  ],
 };
 
 export default function ToolPage({
@@ -102,10 +137,60 @@ export default function ToolPage({
     setCompressedURL(URL.createObjectURL(result));
     setLoading(false);
   };
-
+  
+  const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://www.fixmydocs.in",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: category?.toUpperCase(),
+      item: `https://www.fixmydocs.in/${category}`,
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: title,
+      item: `https://www.fixmydocs.in/${category}/${title
+  .toLowerCase()
+  .replace(/\s+/g, "-")}`,
+    },
+  ],
+};
+const faqSchema = faqs
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: f.answer,
+        },
+      })),
+    }
+  : null;
   return (
     <main className="flex flex-col items-center min-h-screen bg-gray-50 p-4">
       <h1 className="text-3xl font-bold text-center">{title}</h1>
+
+      <div className="text-xs text-gray-500 mt-2">
+  <Link href="/">Home</Link> &gt;{" "}
+  {category && (
+    <>
+      <Link href={`/${category}`}>{category.toUpperCase()}</Link> &gt;{" "}
+    </>
+  )}
+  <span className="text-gray-700">{title}</span>
+</div>
 
       <p className="text-xs text-gray-500 mt-1">
         Free online tool for instant processing
@@ -218,6 +303,23 @@ export default function ToolPage({
       {content?.extra && (
         <p className="mt-4 text-sm text-gray-600">{content.extra}</p>
       )}
+
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(breadcrumbSchema),
+  }}
+/>
+
+{faqSchema && (
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify(faqSchema),
+    }}
+  />
+)}
+
     </main>
   );
 }

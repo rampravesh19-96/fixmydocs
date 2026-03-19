@@ -28,7 +28,7 @@ export function generateFaqs(slug: string, category: string): FAQ[] {
     // 🔥 HIGH TRAFFIC QUERY
     {
       question: `How to ${readable} online free?`,
-      answer: `Simply upload your file, and the tool will automatically resize or compress it to meet the required format instantly.`,
+      answer: `Simply upload your file on FixMyDocs, and the tool will automatically resize or compress it to meet the required format instantly.`,
     },
 
     // 🔥 SIZE BASED QUERY
@@ -54,7 +54,7 @@ export function generateFaqs(slug: string, category: string): FAQ[] {
     // 🔥 TRUST QUESTION
     {
       question: `Is this ${prefix} ${readable} tool free?`,
-      answer: `Yes, this tool is completely free to use with no signup or login required.`,
+      answer: `Yes, FixMyDocs is completely free to use with no signup or login required.`,
     },
 
     // 🔥 PIXEL + KB (IMPORTANT FOR GOOGLE)

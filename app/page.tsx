@@ -88,14 +88,14 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center min-h-screen bg-gray-50 p-4">
-
       {/* 🔥 HERO */}
       <h1 className="text-3xl font-bold text-gray-800 mb-4 text-center">
         Compress Image to 50KB Online Free
       </h1>
 
       <p className="text-gray-600 mb-6 text-center max-w-md">
-        Free online tool to compress images to 50KB for forms, SSC, passport, and job applications.
+        Free online tool to compress images to 50KB for forms, SSC, passport,
+        and job applications.
       </p>
 
       {/* 🔥 UPLOAD */}
@@ -156,31 +156,45 @@ export default function Home() {
         </h2>
 
         <p className="text-gray-600 text-sm mb-4">
-          Compress images to exact KB size like 20KB, 50KB, or 100KB for online forms.
-          Works for SSC, passport, job applications, and government portals.
+          Compress images to exact KB size like 20KB, 50KB, or 100KB for online
+          forms. Works for SSC, passport, job applications, and government
+          portals.
         </p>
       </div>
 
       {/* 🔥 INTERNAL LINKS (VERY IMPORTANT FOR SEO) */}
-      <div className="mt-10 text-center">
-        <h2 className="text-lg font-semibold mb-3">
-          Popular Tools
-        </h2>
+<div className="mt-10 text-center">
+  <h2 className="text-lg font-semibold mb-3">
+    Popular Tools
+  </h2>
 
-<div className="flex flex-col gap-2 text-blue-600 text-sm">
+  <div className="flex flex-col gap-2 text-blue-600 text-sm">
 
-  <Link href="/ssc/photo">SSC Photo</Link>
-  <Link href="/passport/photo">Passport Photo</Link>
+    {/* 🔥 CORE PAGES */}
+    <Link href="/ssc/photo">SSC Photo Tool</Link>
+    <Link href="/passport/photo">Passport Photo Tool</Link>
 
-  <Link href="/ssc/photo-20kb">SSC Photo 20KB</Link>
-  <Link href="/passport/photo-50kb">Passport Photo 50KB</Link>
+    {/* 🔥 HIGH SEARCH KB PAGES */}
+    <Link href="/compress/image-50kb">Compress Image to 50KB</Link>
+    <Link href="/compress/image-20kb">Compress Image to 20KB</Link>
+    <Link href="/compress/image-100kb">Compress Image to 100KB</Link>
 
-  <Link href="/compress/image-50kb">Compress Image</Link>
-  <Link href="/compress/pdf-100kb">Compress PDF</Link>
+    {/* 🔥 SSC CLUSTER */}
+    <Link href="/ssc/photo-20kb">SSC Photo 20KB</Link>
+    <Link href="/ssc/photo-30kb">SSC Photo 30KB</Link>
+    <Link href="/ssc/photo-50kb">SSC Photo 50KB</Link>
 
+    {/* 🔥 PASSPORT CLUSTER */}
+    <Link href="/passport/photo-20kb">Passport Photo 20KB</Link>
+    <Link href="/passport/photo-50kb">Passport Photo 50KB</Link>
+
+    {/* 🔥 FEATURE PAGES */}
+    <Link href="/compress-pdf-to-100kb">Compress PDF to 100KB</Link>
+    <Link href="/convert-pdf-to-word">Convert PDF to Word</Link>
+    <Link href="/resize-image-for-whatsapp">Resize Image for WhatsApp</Link>
+
+  </div>
 </div>
-      </div>
-
     </main>
   );
 }
